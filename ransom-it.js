@@ -1,25 +1,45 @@
 $(function() {
   // Find everything that has a text, isn't just a space, and wrap it
-  // in something we can track later.
+  // in something we can track later. Unless we've already done so.
+  if ($('#did-the-letter-parsing')[0])
+    return;
+
   $('body :not(iframe)').contents().filter(function() {
     return (this.nodeType == 3) && this.nodeValue.match(/\S/);
   }).wrap("<span class='ransom-it'></span>");
 
-  var elements = $('.ransom-it');
-  var text, node, letter, fontsize, bright;
+  // Add a guard so that we don't do this twice. Bad Things happen if you
+  // do this twice.
+  $('body').append($('<span id="did-the-letter-parsing"></span'));
 
+  var elements = $('.ransom-it');
+  var text, node, letter, container;
+
+  // Tokenize the text and apply the style to each letter.
   for (var e = 0; e < elements.length; e++) {
+    container = $(elements[e]);
     text = elements[e].innerHTML;
-    $(elements[e]).empty();
+    container.empty();
     for (var i = 0; i < text.length; i++ ) {
       node = $('<span></span');
       letter = text.charAt(i);
       if ( letter != ' ') {
-        fontsize = fontSize();
-        bright = flip();
-        node.css({
-          'margin' : '0 2px 0 2px',
-          'padding' : '3px',
+        node.css(styleIt());
+      } else {
+        node.css('margin', '0 10px 0 10px');
+      }
+      node.text(letter);
+      container.append(node);
+    }
+  };
+});
+
+function styleIt() {
+  var fontsize = fontSize();
+  var bright = flip();
+  var padding = fontSize <= 20 ? '6px' : '3px';
+  return {'margin' : '0 2px 0 2px',
+          'padding' : padding,
           'text-align' : 'center',
           'background-color' : background(bright),
           'color' : foreground(bright),
@@ -29,16 +49,8 @@ $(function() {
           'text-transform' : textCase(),
           'font-weight' : fontWeight(),
           'font-style' : flip() ? 'italic' : 'normal',
-        });
-      } else {
-        node.css('margin', '0 10px 0 10px');
-      }
-      node.text(letter);
-      $(elements[e]).append(node);
-    }
-  };
-});
-
+        };
+}
 function flip() {
   return Math.floor((Math.random() * 2) + 0);
 }
