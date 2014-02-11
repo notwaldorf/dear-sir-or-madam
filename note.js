@@ -1,36 +1,37 @@
 $(function() {
   // Find everything that has a text, isn't just a space, and wrap it
   // in something we can track later.
-  $('body *').contents().filter(function() {
+  $('body :not(iframe)').contents().filter(function() {
     return (this.nodeType == 3) && this.nodeValue.match(/\S/);
-  }).wrap("<span class='bork-this'></span>");
+  }).wrap("<span class='ransom-it'></span>");
 
-  var elements = $('.bork-this');
+  var elements = $('.ransom-it');
+  var text, node, letter, fontsize, bright;
+
   for (var e = 0; e < elements.length; e++) {
-    var text = elements[e].innerHTML;
+    text = elements[e].innerHTML;
     $(elements[e]).empty();
-    var node;
-    var letter;
     for (var i = 0; i < text.length; i++ ) {
-      var node = $('<span></span');
-      var letter = text.charAt(i)
+      node = $('<span></span');
+      letter = text.charAt(i);
       if ( letter != ' ') {
-        var fontsize = fontSize();
+        fontsize = fontSize();
+        bright = flip();
         node.css({
           'margin' : '0 2px 0 2px',
-          'padding' : '2px',
+          'padding' : '3px',
           'text-align' : 'center',
-          'background-color' : background(),
-          'color' : foreground(),
+          'background-color' : background(bright),
+          'color' : foreground(bright),
           'font-size' : fontsize + 'px',
           'line-height' : fontsize + 15 + 'px',
           'font-family' : font(),
           'text-transform' : textCase(),
-          'font-weight' : flip() ? 'bold' : 'normal',
+          'font-weight' : fontWeight(),
           'font-style' : flip() ? 'italic' : 'normal',
         });
       } else {
-        node.css('margin', '0 5px 0 5px');
+        node.css('margin', '0 10px 0 10px');
       }
       node.text(letter);
       $(elements[e]).append(node);
@@ -42,29 +43,34 @@ function flip() {
   return Math.floor((Math.random() * 2) + 0);
 }
 
-function background() {
-  // Nice pastel-y backgrounds.
+function background(brightBackground) {
   var r = Math.floor(Math.random() * (254)),
       g = Math.floor(Math.random() * (254)),
-      b = Math.floor(Math.random() * (254));
-  return "rgba(" + r + ", " + g + ", " + b + ", 0.5)";
+      b = Math.floor(Math.random() * (254)),
+      a = brightBackground ? 1 : 0.5
+  return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
 }
-function foreground() {
-  // Only dark colours!
-  var r = Math.floor(Math.random() * (154)),
-      g = Math.floor(Math.random() * (154)),
-      b = Math.floor(Math.random() * (154));
+
+function foreground(brightBackground) {
+  var max = brightBackground ? 254 : 200;
+  var min = brightBackground ? 154 : 0;
+  var r = Math.floor(Math.random() * (max - min) + min),
+      g = Math.floor(Math.random() * (max - min) + min),
+      b = Math.floor(Math.random() * (max - min) + min);
   return "rgb(" + r + ", " + g + ", " + b + ")";
 }
 
 function fontSize() {
-  return Math.floor((Math.random() * 4) + 20);
+  return Math.floor((Math.random() * 10) + 16);
 }
 
+function fontWeight() {
+  var weights = ['lighter', 'normal', 'bold', 'bolder'];
+  return weights[Math.floor((Math.random() * 5) + 0)];
+}
 function font() {
   var fonts = ['serif', 'sans-serif', 'monospace', 'Comic Sans'];
-  var which = Math.floor((Math.random() * 5) + 0);
-  return fonts[which];
+  return fonts[Math.floor((Math.random() * 5) + 0)];
 }
 
 function textCase() {
