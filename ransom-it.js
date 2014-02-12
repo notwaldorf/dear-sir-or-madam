@@ -10,7 +10,7 @@ $(function() {
 
   // Add a guard so that we don't do this twice. Bad Things happen if you
   // do this twice.
-  $('body').append($('<span id="did-the-letter-parsing"></span'));
+  $('body').append($('<span id="did-the-letter-parsing"></span>'));
 
   var elements = $('.ransom-it');
   var text, node, letter, container;
@@ -21,7 +21,7 @@ $(function() {
     text = elements[e].innerHTML;
     container.empty();
     for (var i = 0; i < text.length; i++ ) {
-      node = $('<span></span');
+      node = $('<span></span>');
       letter = text.charAt(i);
       if ( letter != ' ') {
         node.css(styleIt());
