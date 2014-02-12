@@ -37,9 +37,9 @@ $(function() {
 function styleIt() {
   var fontsize = fontSize();
   var bright = flip();
-  var padding = fontSize <= 20 ? '6px' : '3px';
+  var padding = fontSize <= 20 ? '0px 10px' : '0px 5px';
   var rotation = (-4 + 8 * Math.random());
-  return {'margin' : '0 2px 0 2px',
+  return {'margin' : '3px 2px 3px 2px',
           'padding' : padding,
           'text-align' : 'center',
           'background-color' : background(bright),
