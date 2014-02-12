@@ -38,6 +38,7 @@ function styleIt() {
   var fontsize = fontSize();
   var bright = flip();
   var padding = fontSize <= 20 ? '6px' : '3px';
+  var rotation = (-4 + 8 * Math.random());
   return {'margin' : '0 2px 0 2px',
           'padding' : padding,
           'text-align' : 'center',
@@ -49,6 +50,8 @@ function styleIt() {
           'text-transform' : textCase(),
           'font-weight' : fontWeight(),
           'font-style' : flip() ? 'italic' : 'normal',
+          'display': 'inline-block',
+          'transform': 'rotate(' + rotation + 'deg)'
         };
 }
 function flip() {
