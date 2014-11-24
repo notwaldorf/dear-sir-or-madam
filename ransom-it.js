@@ -31,7 +31,7 @@ $(function() {
       node.text(letter);
       container.append(node);
     }
-  };
+  }
 });
 
 function styleIt() {
@@ -62,7 +62,7 @@ function background(brightBackground) {
   var r = Math.floor(Math.random() * (254)),
       g = Math.floor(Math.random() * (254)),
       b = Math.floor(Math.random() * (254)),
-      a = brightBackground ? 1 : 0.5
+      a = brightBackground ? 1 : 0.5;
   return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
 }
 
