@@ -55,7 +55,7 @@ function styleIt() {
         };
 }
 function flip() {
-  return Math.floor((Math.random() * 2) + 0);
+  return Math.floor(Math.random() * 2);
 }
 
 function background(brightBackground) {
@@ -81,11 +81,11 @@ function fontSize() {
 
 function fontWeight() {
   var weights = ['lighter', 'normal', 'bold', 'bolder'];
-  return weights[Math.floor((Math.random() * 5) + 0)];
+  return weights[Math.floor(Math.random() * 5)];
 }
 function font() {
   var fonts = ['serif', 'sans-serif', 'monospace', 'Comic Sans'];
-  return fonts[Math.floor((Math.random() * 5) + 0)];
+  return fonts[Math.floor(Math.random() * 5)];
 }
 
 function textCase() {
